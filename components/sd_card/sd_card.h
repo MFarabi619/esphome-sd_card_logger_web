@@ -123,7 +123,7 @@ template<typename... Ts> class SdCardWriteFileAction : public Action<Ts...> {
   TEMPLATABLE_VALUE(std::string, path)
   TEMPLATABLE_VALUE(std::vector<uint8_t>, data)
 
-  void play(Ts... x) {
+  void play(const Ts &...x) override {
     auto path = this->path_.value(x...);
     auto buffer = this->data_.value(x...);
     this->parent_->write_file(path.c_str(), buffer.data(), buffer.size());
@@ -139,7 +139,7 @@ template<typename... Ts> class SdCardAppendFileAction : public Action<Ts...> {
   TEMPLATABLE_VALUE(std::string, path)
   TEMPLATABLE_VALUE(std::vector<uint8_t>, data)
 
-  void play(Ts... x) {
+  void play(const Ts &...x) override {
     auto path = this->path_.value(x...);
     auto buffer = this->data_.value(x...);
     this->parent_->append_file(path.c_str(), buffer.data(), buffer.size());
@@ -154,7 +154,7 @@ template<typename... Ts> class SdCardCreateDirectoryAction : public Action<Ts...
   SdCardCreateDirectoryAction(SdCard *parent) : parent_(parent) {}
   TEMPLATABLE_VALUE(std::string, path)
 
-  void play(Ts... x) {
+  void play(const Ts &...x) override {
     auto path = this->path_.value(x...);
     this->parent_->create_directory(path.c_str());
   }
@@ -168,7 +168,7 @@ template<typename... Ts> class SdCardRemoveDirectoryAction : public Action<Ts...
   SdCardRemoveDirectoryAction(SdCard *parent) : parent_(parent) {}
   TEMPLATABLE_VALUE(std::string, path)
 
-  void play(Ts... x) {
+  void play(const Ts &...x) override {
     auto path = this->path_.value(x...);
     this->parent_->remove_directory(path.c_str());
   }
@@ -182,7 +182,7 @@ template<typename... Ts> class SdCardDeleteFileAction : public Action<Ts...> {
   SdCardDeleteFileAction(SdCard *parent) : parent_(parent) {}
   TEMPLATABLE_VALUE(std::string, path)
 
-  void play(Ts... x) {
+  void play(const Ts &...x) override {
     auto path = this->path_.value(x...);
     this->parent_->delete_file(path.c_str());
   }
